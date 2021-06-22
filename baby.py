@@ -1,0 +1,4 @@
+
+class Yoda():
+
+	pass # comment
