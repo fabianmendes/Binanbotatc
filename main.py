@@ -3,6 +3,7 @@ from binance.client import Client
 import os
 import time
 import numpy as np
+import pandas as pd
 api_key = os.environ.get("API_KEY")
 api_secret = os.environ.get("SECRET_KEY")
 
@@ -45,7 +46,7 @@ while True:
 '''
 print(client.get_asset_balance("USDT"))
 
-margin_d=client.get_margin_account(isisolated=True)
+margin_d=client.get_margin_account()
 m_assets = margin_d["userAssets"]
 portafoliom = []
 portafoliom_assets = []
@@ -69,15 +70,16 @@ for i in range(len(portafoliom_assets)):
 		portafoliom[i]["locked"])
 
 #for i in range(len(portafoliom)):
-margin_array_iso = np.array([portafoliom_assets,
+margin_array_iso = np.array([#portafoliom_assets,
 					portafoliom_free,
 					portafoliom_borrowed,
 					portafoliom_locked])
-print("Margin (Isolated), portafolio:")
+print("\tMargin (Cross), portafolio:")
 print(portafoliom_assets)
 print(margin_array_iso)
-
-
+print(pd.DataFrame(margin_array_iso,
+		columns= portafoliom_assets)
+		)
 
 	
 #print(client.get_margin_account( symbol="BUSD"))
